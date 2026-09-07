@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JT Ops Hub</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231C1B19%22/><text x=%2250%22 y=%2266%22 font-size=%2255%22 font-family=%22sans-serif%22 font-weight=%22700%22 fill=%22white%22 text-anchor=%22middle%22>J</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  .font-display { font-family: 'Manrope', -apple-system, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, "SF Mono", Menlo, monospace; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #E4E4E7; border-radius: 4px; }
+  .nav-icon svg { width: 15px; height: 15px; }
+  .card { transition: box-shadow 0.15s, border-color 0.15s; }
+  .card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-color: #D9D6CE; }
+</style>
+</head>
+<body class="bg-canvas text-ink h-screen overflow-hidden">
+
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <div class="w-64 flex-shrink-0 bg-sidebar border-r border-border flex flex-col p-3 overflow-y-auto">
+    <div class="flex items-center gap-2.5 px-2 mb-7 mt-1">
+      <div class="w-7 h-7 rounded-lg bg-ink flex items-center justify-center text-white text-xs font-bold font-display">J</div>
+      <span class="text-[14.5px] font-bold tracking-tight font-display">JT Ops Hub</span>
+    </div>
+
+    <div class="mb-6">
+      <div class="flex items-center gap-1.5 px-2 mb-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-csm-600"></span>
+        <span class="text-[10.5px] font-bold tracking-wider uppercase text-faint">CSM</span>
+      </div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="csm-overview">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="csm-pipeline">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h6"/></svg></span>Pipeline<span class="ml-auto text-[10.5px] font-bold bg-zinc-200 text-zinc-700 px-1.5 rounded-full" id="pipelineBadge">&middot;</span></div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="csm-contacts">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg></span>Contacts</div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="csm-calendar">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>Content Calendar</div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="csm-automations">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></span>Automations</div>
+    </div>
+
+    <div class="mb-6">
+      <div class="flex items-center gap-1.5 px-2 mb-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-sondrik-600"></span>
+        <span class="text-[10.5px] font-bold tracking-wider uppercase text-faint">Sondrik</span>
+      </div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="sondrik-overview">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg></span>Overview</div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="sondrik-feedback">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a7 7 0 0 1-7 7H8l-5 3 1.5-4.8A7 7 0 1 1 21 12Z"/></svg></span>Feedback</div>
+      <div class="nav-item flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[13.5px] font-medium cursor-pointer text-sub hover:bg-zinc-100" data-view="sondrik-downloads">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0-4.5-4.5M12 16l4.5-4.5"/><path d="M4 19h16"/></svg></span>Downloads</div>
+    </div>
+
+    <div class="mt-auto px-2 pt-2 text-[11px] text-faint leading-snug">Running locally on your Mac, real data, no sandbox.</div>
+  </div>
+
+  <!-- Main -->
+  <div class="main flex-1 flex flex-col min-w-0">
+    <div class="flex items-center justify-between px-8 py-5 border-b border-border flex-shrink-0">
+      <div>
+        <h1 class="text-[20px] font-bold tracking-tight font-display" id="viewTitle">CSM Overview</h1>
+        <div class="text-[12.5px] text-faint mt-0.5" id="viewSub"></div>
+      </div>
+      <button id="reloadBtn" class="text-[13px] font-semibold px-3.5 py-1.5 rounded-lg border border-border bg-panel hover:bg-zinc-50">Reload data</button>
+    </div>
+    <div class="content flex-1 overflow-y-auto px-8 py-6" id="content"></div>
+  </div>
+</div>
+
+<!-- Contact modal -->
+<div id="contactModal" class="hidden fixed inset-0 bg-black/30 z-30 items-center justify-center">
+  <div class="bg-panel rounded-2xl shadow-2xl w-[420px] max-h-[80vh] flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-3.5 border-b border-border">
+      <div class="font-semibold text-[14px]" id="modalName"></div>
+      <button onclick="closeModal()" class="text-faint hover:text-ink text-lg leading-none">&times;</button>
+    </div>
+    <div class="flex-1 overflow-y-auto px-5 py-4" id="modalBody"></div>
+  </div>
+</div>
+
+<button id="chatToggle" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-ink text-white shadow-lg flex items-center justify-center text-xl z-20">&#128172;</button>
+<div id="chatPanel" class="hidden fixed bottom-24 right-6 w-[340px] h-[440px] bg-panel border border-border rounded-2xl shadow-2xl flex-col overflow-hidden z-20">
+  <div class="px-4 py-3 border-b border-border text-[13px] font-semibold">Ask the hub</div>
+  <div id="chatBody" class="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-2.5">
+    <div class="chat-msg assistant self-start bg-zinc-100 text-ink text-[13px] leading-relaxed max-w-[88%] px-3 py-2 rounded-xl">Ask me about anything in the pipeline or automations. I can see what's on screen.</div>
+  </div>
+  <div class="flex gap-2 p-2.5 border-t border-border">
+    <input id="chatInput" type="text" placeholder="Ask something..." class="flex-1 text-[13px] px-2.5 py-2 rounded-lg border border-border bg-canvas" />
+    <button id="chatSend" class="text-[13px] font-semibold px-3 py-2 rounded-lg bg-ink text-white">Send</button>
+  </div>
+</div>
+
+<script>
+let prospects = [];
+let automations = [];
+let currentView = 'csm-overview';
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+const STATUS_STYLE = {
+  'researching': 'bg-csm-50 text-csm-700',
+  'contacted': 'bg-amber-50 text-amber-700',
+  'replied': 'bg-emerald-50 text-emerald-700',
+  'lead': 'bg-emerald-50 text-emerald-700',
+  'meeting booked': 'bg-emerald-50 text-emerald-700',
+  'client': 'bg-ink text-white',
+  'not interested': 'bg-red-50 text-red-700',
+};
+function pillClass(status) { return STATUS_STYLE[String(status).toLowerCase()] || 'bg-zinc-100 text-zinc-700'; }
+
+const VIEWS = {
+  'csm-overview': { title: 'CSM Overview', sub: 'China social media, at a glance', accent: 'csm' },
+  'csm-pipeline': { title: 'Pipeline', sub: 'Every prospect and lead, live', accent: 'csm' },
+  'csm-contacts': { title: 'Contacts', sub: 'Every real person on file', accent: 'csm' },
+  'csm-calendar': { title: 'Content Calendar', sub: 'Nothing scheduled yet', accent: 'csm' },
+  'csm-automations': { title: 'Automations', sub: "What's actually running", accent: 'csm' },
+  'sondrik-overview': { title: 'Sondrik Overview', sub: 'Product and growth', accent: 'sondrik' },
+  'sondrik-feedback': { title: 'Feedback', sub: 'Reviews, comments, replies', accent: 'sondrik' },
+  'sondrik-downloads': { title: 'Downloads & Visits', sub: 'Site traffic and installs', accent: 'sondrik' },
+};
+
+const HOT_LEAD_STATUSES = ['Replied', 'Lead', 'Meeting Booked', 'Client'];
+const PROSPECT_STATUSES = ['Researching', 'Contacted'];
+
+function bucketize(list) {
+  return {
+    hot: list.filter(p => HOT_LEAD_STATUSES.includes(p.status)),
+    prospect: list.filter(p => PROSPECT_STATUSES.includes(p.status)),
+    notInterested: list.filter(p => p.status === 'Not Interested'),
+  };
+}
+
+function statCard(num, label) {
+  return `<div class="bg-panel border border-border rounded-xl px-4 py-4">
+    <div class="text-[28px] font-extrabold tabular-nums font-display tracking-tight leading-none">${num}</div>
+    <div class="text-[11px] text-faint uppercase tracking-wide mt-1.5 font-semibold">${escapeHtml(label)}</div>
+  </div>`;
+}
+
+function renderCsmOverview() {
+  const { hot, prospect, notInterested } = bucketize(prospects);
+  const drafts = prospects.filter(p => (p.draftOutreach || p.draftedFollowup) && !p.approvedToSend).length;
+  return `
+    <div class="grid gap-2.5 mb-6" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+      ${statCard(hot.length, 'Hot Leads')}
+      ${statCard(prospect.length, 'Prospects')}
+      ${statCard(notInterested.length, 'Not Interested')}
+      ${statCard(prospects.length, 'Total')}
+    </div>
+    ${drafts > 0 ? `<div class="bg-panel border border-border rounded-xl px-4 py-3.5 text-[13.5px] text-sub leading-relaxed mb-3"><b class="text-ink">${drafts} draft${drafts > 1 ? 's' : ''}</b> waiting on your approval before anything sends. Check the Pipeline tab.</div>` : ''}
+    ${hot.length > 0 ? `<div class="bg-panel border border-border rounded-xl px-4 py-3.5 text-[13.5px] text-sub leading-relaxed mb-3"><b class="text-ink">${hot.map(p => escapeHtml(p.name)).join(', ')}</b> ${hot.length > 1 ? 'are' : 'is'} a real hot lead, actual back-and-forth happening, not just research.</div>` : ''}
+  `;
+}
+
+function pipelineSection(title, list, emptyText) {
+  if (list.length === 0) return `<div class="mb-6"><div class="text-[11px] font-semibold uppercase tracking-wide text-faint mb-2">${escapeHtml(title)}</div><div class="text-[13px] text-faint py-3">${escapeHtml(emptyText)}</div></div>`;
+  return `<div class="mb-6">
+    <div class="text-[11px] font-semibold uppercase tracking-wide text-faint mb-2">${escapeHtml(title)} &middot; ${list.length}</div>
+    <div class="flex flex-col gap-2.5">${list.map(p => pipelineCard(p)).join('')}</div>
+  </div>`;
+}
+
+function pipelineCard(p) {
+  const idx = prospects.indexOf(p);
+  return `
+    <div class="card bg-panel border border-border rounded-xl px-5 py-4" id="card-${idx}">
+      <div class="flex items-start justify-between gap-3 cursor-pointer" onclick="document.getElementById('body-${idx}').classList.toggle('hidden')">
+        <div>
+          <div class="font-bold text-[14.5px] font-display tracking-tight">${escapeHtml(p.name || p.company)}</div>
+          <div class="text-[12.5px] text-sub mt-0.5">${escapeHtml(p.company)}${p.source ? ' &middot; ' + escapeHtml(p.source) : ''}</div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          ${p.latestReply && !p.approvedToSend ? '<span class="text-[10.5px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">New reply</span>' : ''}
+          ${(p.draftOutreach || p.draftedFollowup) && !p.approvedToSend ? '<span class="text-[10.5px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">Draft waiting</span>' : ''}
+          <span class="text-[10.5px] font-semibold px-2.5 py-1 rounded-full ${pillClass(p.status)}">${escapeHtml(p.status)}</span>
+        </div>
+      </div>
+      <div class="hidden mt-3.5 pt-3.5 border-t border-border" id="body-${idx}">
+        <div class="flex flex-wrap gap-x-5 gap-y-1 text-[12.5px] text-sub mb-3 items-center">
+          <span class="text-[10.5px] font-semibold px-2 py-0.5 rounded-full ${p.contactMethod === 'Direct Email' ? 'bg-emerald-50 text-emerald-700' : p.contactMethod === 'Unconfirmed' ? 'bg-zinc-100 text-zinc-600' : 'bg-amber-50 text-amber-700'}">${escapeHtml(p.contactMethod)}</span>
+          ${p.contactRole ? `<span>${escapeHtml(p.contactRole)}</span>` : ''}
+          ${p.contactEmail ? `<span>${escapeHtml(p.contactEmail)}</span>` : ''}
+          ${p.contactPhone ? `<span>${escapeHtml(p.contactPhone)}</span>` : ''}
+        </div>
+        ${p.draftOutreach && p.contactMethod !== 'Direct Email' ? `<div class="text-[12px] text-amber-700 bg-amber-50 rounded-lg px-3 py-2 mb-3">This draft is written like a direct message. Contact method here is "${escapeHtml(p.contactMethod)}", so it likely needs rewriting as a pitch to a rep before it's usable.</div>` : ''}
+        ${p.notes ? `<div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Research</div><div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-3">${escapeHtml(p.notes)}</div>` : ''}
+        ${p.latestReply ? `<div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Latest Reply</div><div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-3">${escapeHtml(p.latestReply)}</div>` : ''}
+        ${p.suggestedFollowup ? `<div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Suggested Follow-up (attempt ${p.followUpAttempts}, needs your approval)</div><div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-3">${escapeHtml(p.suggestedFollowup)}</div>` : ''}
+        ${p.draftedFollowup ? `<div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Drafted Follow-up (needs your approval)</div><div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-3">${escapeHtml(p.draftedFollowup)}</div>` : ''}
+        ${p.draftOutreach ? `<div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Draft Outreach Email (needs your approval)</div><div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-3">${escapeHtml(p.draftOutreach)}</div>` : ''}
+        <div class="text-[10px] font-semibold uppercase tracking-wide text-faint mb-1">Notes</div>
+        <div class="mono text-[12px] leading-relaxed text-sub whitespace-pre-wrap mb-2">${p.activityNotes ? escapeHtml(p.activityNotes) : 'Nothing logged yet.'}</div>
+        <div class="flex gap-2" onclick="event.stopPropagation()">
+          <input type="text" placeholder="Add a note..." class="note-input flex-1 text-[12.5px] px-2.5 py-1.5 rounded-lg border border-border" data-id="${p.id}" />
+          <button class="add-note-btn text-[12.5px] font-semibold px-3 py-1.5 rounded-lg bg-ink text-white" data-id="${p.id}">Add</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCsmPipeline() {
+  if (prospects.length === 0) return `<div class="text-center text-faint text-[13px] py-16 max-w-md mx-auto leading-relaxed">Nothing in the pipeline yet.</div>`;
+  const { hot, prospect, notInterested } = bucketize(prospects);
+  return pipelineSection('Hot Leads', hot, "Nobody yet, real back-and-forth hasn't happened.")
+    + pipelineSection('Prospects', prospect, 'Nobody being researched or waiting on a reply right now.')
+    + (notInterested.length > 0 ? pipelineSection('Not Interested', notInterested, '') : '');
+}
+
+function renderCsmContacts() {
+  const withContact = prospects.filter(p => p.name);
+  if (withContact.length === 0) return `<div class="text-center text-faint text-[13px] py-16">No contacts on file yet.</div>`;
+  return `<div class="bg-panel border border-border rounded-xl overflow-x-auto">
+    <table class="w-full text-[13px] whitespace-nowrap">
+      <thead><tr class="border-b border-border text-[11px] uppercase tracking-wide text-faint text-left">
+        <th class="px-4 py-2.5 font-semibold">Name</th><th class="px-4 py-2.5 font-semibold">Company</th><th class="px-4 py-2.5 font-semibold">Role</th><th class="px-4 py-2.5 font-semibold">Email</th><th class="px-4 py-2.5 font-semibold">Phone</th><th class="px-4 py-2.5 font-semibold">Reach via</th><th class="px-4 py-2.5 font-semibold">Status</th>
+      </tr></thead>
+      <tbody>
+        ${withContact.map(p => `<tr class="border-b border-border last:border-0">
+          <td class="px-4 py-2.5 font-medium">${escapeHtml(p.name)}</td>
+          <td class="px-4 py-2.5 text-sub">${escapeHtml(p.company)}</td>
+          <td class="px-4 py-2.5 text-sub">${escapeHtml(p.contactRole) || '&mdash;'}</td>
+          <td class="px-4 py-2.5 text-sub">${escapeHtml(p.contactEmail) || '&mdash;'}</td>
+          <td class="px-4 py-2.5 text-sub">${escapeHtml(p.contactPhone) || '&mdash;'}</td>
+          <td class="px-4 py-2.5"><span class="text-[10.5px] font-semibold px-2 py-0.5 rounded-full ${p.contactMethod === 'Direct Email' ? 'bg-emerald-50 text-emerald-700' : p.contactMethod === 'Unconfirmed' ? 'bg-zinc-100 text-zinc-600' : 'bg-amber-50 text-amber-700'}">${escapeHtml(p.contactMethod)}</span></td>
+          <td class="px-4 py-2.5"><span class="text-[10.5px] font-semibold px-2.5 py-1 rounded-full ${pillClass(p.status)}">${escapeHtml(p.status)}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="text-[12px] text-faint mt-3">Missing an email or phone? Add it directly in Airtable for now, it'll show up here on next reload.</div>`;
+}
+
+function renderCsmCalendar() {
+  return `<div class="text-center text-faint text-[13px] py-16 max-w-md mx-auto leading-relaxed">No real posting cadence defined yet, this is honest, not a mockup. Once you decide what you're actually posting and for who, this becomes a real calendar.</div>`;
+}
+
+function renderCsmAutomations() {
+  if (automations.length === 0) return `<div class="text-center text-faint text-[13px] py-16">No automations found.</div>`;
+  return automations.map(a => `
+    <div class="card flex items-start gap-3.5 bg-panel border border-border rounded-xl px-5 py-4 mb-2.5">
+      <div class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${a.active ? 'bg-emerald-500' : 'bg-zinc-300'}"></div>
+      <div>
+        <div class="font-bold text-[14px] font-display tracking-tight">${escapeHtml(a.name)}</div>
+        <div class="text-[12.5px] text-sub mt-0.5 leading-relaxed max-w-[60ch]">${escapeHtml(a.description)}</div>
+      </div>
+      <div class="ml-auto flex gap-4 flex-shrink-0 text-right">
+        <div><div class="text-lg font-extrabold tabular-nums font-display">${a.runs || 0}</div><div class="text-[10px] text-faint uppercase tracking-wide font-semibold">Runs</div></div>
+        <div><div class="text-lg font-extrabold tabular-nums font-display">${a.succeeded || 0}</div><div class="text-[10px] text-faint uppercase tracking-wide font-semibold">OK</div></div>
+        <div><div class="text-lg font-extrabold tabular-nums font-display">${a.failed || 0}</div><div class="text-[10px] text-faint uppercase tracking-wide font-semibold">Failed</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function emptyPanel(text) {
+  return `<div class="text-center text-faint text-[13px] py-16 max-w-md mx-auto leading-relaxed">${text}</div>`;
+}
+function renderSondrikOverview() { return emptyPanel("Nothing tracked yet. Sondrik doesn't have download or visit tracking wired up, that's phase 1 and it hasn't started."); }
+function renderSondrikFeedback() { return emptyPanel("No feedback pipeline yet. Once Product Hunt comments, emails, and reviews are wired in, they'll show up here as one feed."); }
+function renderSondrikDownloads() { return emptyPanel("No analytics on the site yet. Needs a download counter and visit tracking added to the actual site first."); }
+
+function renderView() {
+  const view = VIEWS[currentView];
+  document.querySelectorAll('.nav-item').forEach(i => {
+    i.classList.remove('bg-csm-600', 'bg-sondrik-600', 'text-white', 'text-sub', 'hover:bg-zinc-100');
+    if (i.dataset.view === currentView) {
+      i.classList.add(VIEWS[i.dataset.view].accent === 'csm' ? 'bg-csm-600' : 'bg-sondrik-600', 'text-white');
+    } else {
+      i.classList.add('text-sub', 'hover:bg-zinc-100');
+    }
+  });
+  document.getElementById('viewTitle').textContent = view.title;
+  document.getElementById('viewSub').textContent = view.sub;
+  const content = document.getElementById('content');
+  if (currentView === 'csm-overview') content.innerHTML = renderCsmOverview();
+  else if (currentView === 'csm-pipeline') content.innerHTML = renderCsmPipeline();
+  else if (currentView === 'csm-contacts') content.innerHTML = renderCsmContacts();
+  else if (currentView === 'csm-calendar') content.innerHTML = renderCsmCalendar();
+  else if (currentView === 'csm-automations') content.innerHTML = renderCsmAutomations();
+  else if (currentView === 'sondrik-overview') content.innerHTML = renderSondrikOverview();
+  else if (currentView === 'sondrik-feedback') content.innerHTML = renderSondrikFeedback();
+  else if (currentView === 'sondrik-downloads') content.innerHTML = renderSondrikDownloads();
+  document.getElementById('pipelineBadge').textContent = prospects.length;
+  attachNoteHandlers();
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => { currentView = item.dataset.view; renderView(); });
+});
+
+function attachNoteHandlers() {
+  document.querySelectorAll('.add-note-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.id;
+      const input = document.querySelector(`.note-input[data-id="${id}"]`);
+      const note = input.value.trim();
+      if (!note) return;
+      btn.disabled = true;
+      btn.textContent = '...';
+      try {
+        const res = await fetch(`/api/prospects/${id}/notes`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ note })
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(JSON.stringify(data.error));
+        const p = prospects.find(p => p.id === id);
+        if (p) p.activityNotes = data.activityNotes;
+        renderView();
+      } catch (err) {
+        alert('Failed to save note: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Add';
+      }
+    });
+  });
+}
+
+async function loadData() {
+  const content = document.getElementById('content');
+  try {
+    const [pRes, aRes] = await Promise.all([fetch('/api/prospects'), fetch('/api/automations')]);
+    const pData = await pRes.json();
+    const aData = await aRes.json();
+    if (pData.error) throw new Error(JSON.stringify(pData.error));
+    if (aData.error) throw new Error(JSON.stringify(aData.error));
+    prospects = pData.prospects || [];
+    automations = aData.automations || [];
+    renderView();
+  } catch (err) {
+    content.innerHTML = `<div class="bg-red-50 text-red-700 rounded-lg px-4 py-3.5 text-[13px]">Couldn't load data: ${escapeHtml(err.message)}</div>`;
+  }
+}
+document.getElementById('reloadBtn').addEventListener('click', loadData);
+renderView();
+loadData();
+
+const chatToggle = document.getElementById('chatToggle');
+const chatPanel = document.getElementById('chatPanel');
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+let chatHistory = [];
+
+chatToggle.addEventListener('click', () => {
+  chatPanel.classList.toggle('hidden');
+  chatPanel.classList.toggle('flex');
+});
+
+function addMsg(role, text) {
+  const div = document.createElement('div');
+  const isUser = role === 'user';
+  div.className = `chat-msg ${role} ${isUser ? 'self-end bg-ink text-white' : 'self-start bg-zinc-100 text-ink'} text-[13px] leading-relaxed max-w-[88%] px-3 py-2 rounded-xl whitespace-pre-wrap`;
+  div.textContent = text;
+  chatBody.appendChild(div);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return div;
+}
+
+async function sendChat() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = '';
+  addMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  const thinking = addMsg('assistant', 'Thinking...');
+  try {
+    const context = `Pipeline: ${JSON.stringify(prospects.map(p => ({name: p.name, company: p.company, status: p.status})))}. Automations: ${JSON.stringify(automations.map(a => ({name: a.name, active: a.active, runs: a.runs})))}.`;
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory, context })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(JSON.stringify(data.error));
+    thinking.textContent = data.text;
+    chatHistory.push({ role: 'assistant', content: data.text });
+  } catch (err) {
+    thinking.textContent = 'Error: ' + err.message;
+  }
+}
+chatSend.addEventListener('click', sendChat);
+chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+function closeModal() { document.getElementById('contactModal').classList.add('hidden'); }
+</script>
+</body>
+</html>
